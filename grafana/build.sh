@@ -1,0 +1,13 @@
+#!/bin/bash
+
+PREFIX=${DOCKER_PREFIX:-blackbelt}
+GRAFANA_VERSION=${1:-3.1.1-1470047149}
+
+CWD="`dirname $0`"
+
+docker build -t "${PREFIX}/grafana" --build-arg "GRAFANA_VERSION=${GRAFANA_VERSION}" "${CWD}"
+docker tag  "${PREFIX}/grafana" "${PREFIX}/grafana:${GRAFANA_VERSION}" 
+if [ "x1" == "x${PUSH_DOCKER_IMAGE}" ]
+then
+    docker push "${PREFIX}/grafana"
+fi

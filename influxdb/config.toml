@@ -1,0 +1,116 @@
+# InfluxDB configuration file
+
+reporting-disabled = true
+
+[meta]
+  enabled = true
+  dir = "/data/meta"
+  bind-address = ":8088"
+  retention-autocreate = true
+  election-timeout = "1s"
+  heartbeat-timeout = "1s"
+  leader-lease-timeout = "500ms"
+  commit-timeout = "50ms"
+  cluster-tracking = false
+
+[data]
+  enabled = true
+  dir = "/data/db"
+  max-wal-size = 104857600 # Maximum size the WAL can reach before a flush. Defaults to 100MB.
+  wal-flush-interval = "10m0s" # Maximum time data can sit in WAL before a flush.
+  wal-partition-flush-delay = "2s" # The delay time between each WAL partition being flushed.
+  wal-dir = "/data/wal"
+  wal-enable-logging = true
+  data-logging-enabled = true
+
+[hinted-handoff]
+  enabled = true
+  dir = "/data/hh"
+  max-size = 1073741824
+  max-age = "168h"
+  retry-rate-limit = 0
+  retry-interval = "1s"
+  retry-max-interval = "1m"
+  purge-interval = "1h"
+
+[cluster]
+  write-timeout = "10s" # The time within which a write operation must complete on the cluster.
+  shard-writer-timeout = "5s" # The time within which a shard must respond to write.
+
+[retention]
+  enabled = true
+  check-interval = "30m"
+
+[shard-precreation]
+  enabled = true
+  check-interval = "10m"
+  advanced-period = "30m"
+
+[monitor]
+  store-enabled = true # Wheater to record statistics internally.
+  store-database = "_internal" # The destination database for recorded statistics
+  store-interval = "10s" # The interval at which to record statistics
+
+[admin]
+  enabled = true
+  bind-address = ":8083"
+  https-enabled = false
+  https-certificate = "/etc/ssl/influxdb.pem"
+
+[http]
+  enabled = true
+  bind-address = ":8086"
+  auth-enabled = false
+  log-enabled = true
+  write-tracing = false
+  pprof-enabled = false
+  https-enabled = false
+  https-certificate = "/etc/ssl/influxdb.pem"
+
+[[graphite]]
+  enabled = true
+  bind-address = ":2003"
+  protocol = "tcp"
+  consistency-level = "one"
+  separator = "."
+  database = "graphitedb"
+  # These next lines control how batching works. You should have this enabled
+  # otherwise you could get dropped metrics or poor performance. Batching
+  # will buffer points in memory if you have many coming in.
+  # batch-size = 1000 # will flush if this many points get buffered
+  # batch-timeout = "1s" # will flush at least this often even if we haven't hit buffer limit
+  batch-size = 1000
+  batch-timeout = "1s"
+  templates = [
+     # filter + template
+     #"*.app env.service.resource.measurement",
+     # filter + template + extra tag
+     #"stats.* .host.measurement* region=us-west,agent=sensu",
+     # default template. Ignore the first graphite component "servers"
+     "instance.profile.measurement*"
+ ]
+
+[[collectd]]
+  enabled = true
+  bind-address = ":25826"
+  database = "collectd"
+  typesdb = "/usr/share/collectd/types.db"
+
+  batch-size = 10000 # will flush if this many points get buffered
+  batch-pending = 50 # number of batches that may be pending in memory
+  batch-timeout = "10s" # will flush at least this often even if we haven't hit buffer limit
+  read-buffer = 0 # UDP Read buffer size, 0 means OS default. UDP listener will fail if set above OS max.
+
+[[opentsdb]]
+  enabled = false
+
+[[udp]]
+  enabled = false
+
+[monitoring]
+  enabled = false
+
+[continuous_queries]
+  log-enabled = true
+  enabled = true
+
