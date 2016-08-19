@@ -3,6 +3,7 @@
 #  mkdir -p /var/lib/docker/shared-volumes/grafana/logs
 #  mkdir -p /var/lib/docker/shared-volumes/grafana/data
 #  mkdir -p /var/lib/docker/shared-volumes/influxdb
+#  chmod 1777 /var/lib/docker/shared-volumes -R
 
 influxdbData:
   image: busybox
