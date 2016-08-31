@@ -1,5 +1,5 @@
 FROM frolvlad/alpine-glibc:alpine-3.3_glibc-2.23
-MAINTAINER József Börcsök "borcsokj@sch.bme.hu"
+MAINTAINER József Börcsök "jozsef.borcsok@blackbelt.hu"
 MAINTAINER Robert Csakany "robert.csakany@blackbelt.hu"
 
 ARG GRAFANA_VERSION

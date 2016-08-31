@@ -1,5 +1,5 @@
 FROM alpine:3.3
-MAINTAINER József Börcsök "borcsokj@sch.bme.hu"
+MAINTAINER József Börcsök "jozsef.borcsok@blackbelt.hu"
 MAINTAINER Robert Csakany "robert.csakany@blackbelt.hu"
 
 RUN apk add --update bash curl grep && rm -rf /var/cache/apk/* && \
