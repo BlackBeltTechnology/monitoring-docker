@@ -36,6 +36,9 @@ EXPOSE 8086
 # Graphite API
 EXPOSE 2003
 
+# CollectD
+EXPOSE 25826/udp
+
 # Raft port (for clustering, don't expose publicly!)
 #EXPOSE 8090
 
