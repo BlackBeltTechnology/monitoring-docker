@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 PREFIX=${DOCKER_PREFIX:-blackbelt}
 INFLUXDB_VERSION=${1:-0.13.0-1}
 

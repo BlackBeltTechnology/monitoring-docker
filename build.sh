@@ -1,4 +1,7 @@
 #!/bin/bash
-cd ./influxdb/ && ./build.sh && cd ../grafana/ && ./build.sh && cd ..
 
+CWD=`dirname $0`
 
+"${CWD}/influxdb/build.sh"
+
+"${CWD}/grafana/build.sh"

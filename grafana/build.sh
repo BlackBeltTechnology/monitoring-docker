@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 PREFIX=${DOCKER_PREFIX:-blackbelt}
 GRAFANA_VERSION=${1:-3.1.1-1470047149}
 

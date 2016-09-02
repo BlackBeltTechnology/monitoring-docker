@@ -1,4 +1,4 @@
-FROM alpine:3.3
+FROM alpine:3.4
 MAINTAINER József Börcsök "jozsef.borcsok@blackbelt.hu"
 MAINTAINER Robert Csakany "robert.csakany@blackbelt.hu"
 
