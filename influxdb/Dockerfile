@@ -14,7 +14,7 @@ RUN set -e \
     && TGZ_FILE_NAME="influxdb-${DOWNLOAD_VERSION}_linux_amd64.tar.gz" \
     && wget -O "/tmp/${TGZ_FILE_NAME}" "https://dl.influxdata.com/influxdb/releases/${TGZ_FILE_NAME}" \
     && tar xvfz "/tmp/${TGZ_FILE_NAME}" -C "${tmp}" \
-    && cp -r "/tmp/influxdb-${INFLUXDB_VERSION}/"* / \
+    && cp -r /tmp/influxdb-*/* / \
     && apk del build-dependencies \
     && rm -rf "/tmp/"*
 
