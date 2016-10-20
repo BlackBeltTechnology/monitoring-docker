@@ -7,7 +7,7 @@ INFLUXDB_VERSION=${1:-1.0.2}
 
 CWD="`dirname $0`"
 
-if [ "${INFLUXDB_VERSION}" > "0" ]
+if [ "${INFLUXDB_VERSION}" \> "0" ]
 then
     cp "${CWD}/config-1.0.toml" "${CWD}/config.toml"
 else
