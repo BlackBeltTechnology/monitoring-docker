@@ -3,7 +3,7 @@
 set -e
 
 PREFIX=${DOCKER_PREFIX:-blackbelt}
-GRAFANA_VERSION=${1:-4.1.2-1486989747}
+GRAFANA_VERSION=${1:-4.2.0}
 
 CWD="`dirname $0`"
 
