@@ -11,7 +11,7 @@ ENV TGZ_FILE_NAME="grafana-${GRAFANA_VERSION}.linux-x64.tar.gz"
 
 RUN set -e \
     && apk add --update --virtual=build-dependencies ca-certificates wget \
-    && wget -O "/tmp/${TGZ_FILE_NAME}" "https://grafanarel.s3.amazonaws.com/builds/${TGZ_FILE_NAME}" \
+    && wget -O "/tmp/${TGZ_FILE_NAME}" "https://s3-us-west-2.amazonaws.com/grafana-releases/release/${TGZ_FILE_NAME}" \
     && apk del build-dependencies
 
 RUN set -e \
