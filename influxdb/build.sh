@@ -3,7 +3,7 @@
 set -e
 
 PREFIX=${DOCKER_PREFIX:-blackbelt}
-INFLUXDB_VERSION=${1:-1.3.3}
+INFLUXDB_VERSION=${1:-1.3.4}
 
 CWD="`dirname $0`"
 
