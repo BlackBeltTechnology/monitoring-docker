@@ -8,7 +8,7 @@ ENV CONFIG_FILE="/config/config.toml"
 
 RUN set -e \
     && apk add --update --virtual=build-dependencies ca-certificates wget \
-    && if [[ "${INFLUXDB_VERSION}" > "0.12" -a "${INFLUXDB_VERSION}" \< "0.13" ]]; then tmp="/tmp/influxdb-${INFLUXDB_VERSION}"; else tmp="/tmp"; fi \
+    && if [[ "${INFLUXDB_VERSION}" > "0.12" -a "${INFLUXDB_VERSION}" \< "0.13"  -o "${INFLUXDB_VERSION}" > "1.3.5" ]]; then tmp="/tmp/influxdb-${INFLUXDB_VERSION}"; else tmp="/tmp"; fi \
     && mkdir -p "${tmp}" \
     && if [[ "${INFLUXDB_VERSION}" > "0.13" ]]; then DOWNLOAD_VERSION=`echo "${INFLUXDB_VERSION}" | sed s/-.*//`; else DOWNLOAD_VERSION="${INFLUXDB_VERSION}"; fi \
     && TGZ_FILE_NAME="influxdb-${DOWNLOAD_VERSION}_linux_amd64.tar.gz" \
