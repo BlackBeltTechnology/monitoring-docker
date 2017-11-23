@@ -15,6 +15,7 @@ RUN set -e \
     && wget -O "/tmp/${TGZ_FILE_NAME}" "https://dl.influxdata.com/influxdb/releases/${TGZ_FILE_NAME}" \
     && tar xvfz "/tmp/${TGZ_FILE_NAME}" -C "${tmp}" \
     && cp -r /tmp/influxdb-*/* / \
+    && cp -r /tmp/influxdb-*/influxdb-*/* / \
     && apk del build-dependencies \
     && rm -rf "/tmp/"*
 
