@@ -4,16 +4,27 @@ MAINTAINER Robert Csakany "robert.csakany@blackbelt.hu"
 
 ARG INFLUXDB_VERSION
 
-ENV CONFIG_FILE="/config/config.toml"
+ENV CONFIG_FILE="/config/influxdb.conf"
 
 RUN set -e \
-    && apk add --update --virtual=build-dependencies ca-certificates wget \
+    && apk add --update --virtual=build-dependencies gnupg ca-certificates wget \
+    && for key in \
+        05CE15085FC09D18E99EFB22684A14CF2582E0C5 ; \
+    do \
+        gpg --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys "$key" || \
+        gpg --keyserver pgp.mit.edu --recv-keys "$key" || \
+        gpg --keyserver keyserver.pgp.com --recv-keys "$key" || \
+        gpg --keyserver ha.pool.sks-keyservers.net --recv-keys "$key" ; \
+    done \
     && if [[ "${INFLUXDB_VERSION}" > "0.12" -a "${INFLUXDB_VERSION}" \< "0.13"  -o "${INFLUXDB_VERSION}" > "1.3.5" ]]; then tmp="/tmp/influxdb-${INFLUXDB_VERSION}"; else tmp="/tmp"; fi \
     && mkdir -p "${tmp}" \
     && if [[ "${INFLUXDB_VERSION}" > "0.13" ]]; then DOWNLOAD_VERSION=`echo "${INFLUXDB_VERSION}" | sed s/-.*//`; else DOWNLOAD_VERSION="${INFLUXDB_VERSION}"; fi \
     && TGZ_FILE_NAME="influxdb-${DOWNLOAD_VERSION}_linux_amd64.tar.gz" \
+    && wget -O "/tmp/${TGZ_FILE_NAME}.asc" "https://dl.influxdata.com/influxdb/releases/${TGZ_FILE_NAME}.asc" \
     && wget -O "/tmp/${TGZ_FILE_NAME}" "https://dl.influxdata.com/influxdb/releases/${TGZ_FILE_NAME}" \
+    && gpg --batch --verify "/tmp/${TGZ_FILE_NAME}.asc" "/tmp/${TGZ_FILE_NAME}" \
     && tar xvfz "/tmp/${TGZ_FILE_NAME}" -C "${tmp}" \
+    && rm "/tmp/${TGZ_FILE_NAME}.asc" \
     && cp -r /tmp/influxdb-*/* / \
     && cp -r /tmp/influxdb-*/influxdb-*/* / \
     && apk del build-dependencies \
@@ -27,7 +38,7 @@ RUN set -e \
     && chmod +x "/usr/bin/influxdb.sh"
 
 ADD types.db /usr/share/collectd/types.db
-ADD config.toml ${CONFIG_FILE}
+ADD influxdb.conf ${CONFIG_FILE}
 
 # Admin server WebUI
 EXPOSE 8083
